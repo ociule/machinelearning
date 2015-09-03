@@ -20,14 +20,22 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+H = sigmoid(X * theta);
+J = sum(-y .* log(H) - (1 - y) .* log(1 - H)) / m;
 
-J = sum(-y .* log(sigmoid(X * theta)) - (1 - y) .* log(1 - sigmoid(X * theta))) / m;
+% First try: unvectorized
+%for i = 1:size(theta)
+%    grad(i) = 1/m * sum((sigmoid(X * theta) - y) .* X(:, i));
+%end
 
-% grad = sum(sigmoid(X * theta) - y) * X / m;
+% Second try, with arrayfun
+%f = @(i) 1/m * sum((sigmoid(X * theta) - y) .* X(:, i));
+%yy = 1:size(theta);
+%grad = arrayfun(f, yy);
 
-for i = 1:size(theta)
-    grad(i) = 1/m * sum((sigmoid(X * theta) - y) .* X(:, i));
-end
+% Vectorized, after reading this advice:
+% https://www.coursera.org/learn/machine-learning/discussions/GVdQ9vTdEeSUBCIAC9QURQ
+grad = X' * (H - y) / m;
 
 % =============================================================
 

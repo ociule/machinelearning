@@ -25,12 +25,21 @@ end
 
 % grad = sum(sigmoid(X * theta) - y) .* X / m;
 
-grad(1) = 1/m * sum((sigmoid(X * theta) - y) .* X(:, 1));
+
+selector = ones(size(theta), 1);
+selector(1) = 0;
+f = @(i) 1/m * sum((sigmoid(X * theta) - y) .* X(:, i)) + selector(i) * lambda / m * theta(i);
+
+yy = 1:size(theta);
+grad = arrayfun(f, yy);
+
+%grad(1) = 1/m * sum((sigmoid(X * theta) - y) .* X(:, 1));
+
+%for i = 2:size(theta)
+%    grad(i) = 1/m * sum((sigmoid(X * theta) - y) .* X(:, i)) + lambda / m * theta(i);
+%end
 
 
-for i = 2:size(theta)
-    grad(i) = 1/m * sum((sigmoid(X * theta) - y) .* X(:, i)) + lambda / m * theta(i);
-end
 
 % =============================================================
 
