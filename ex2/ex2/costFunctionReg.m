@@ -17,28 +17,35 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
-J = sum(-y .* log(sigmoid(X * theta)) - (1 - y) .* log(1 - sigmoid(X * theta))) / m;
+H = sigmoid(X * theta);
+J = sum(-y .* log(H) - (1 - y) .* log(1 - H)) / m;
 
-for i = 2:size(theta)
-  J += lambda * theta(i) ^ 2 / (2 * m);
-end
+% See https://www.coursera.org/learn/machine-learning/module/mgpv7/discussions/0DKoqvTgEeS16yIACyoj1Q
+theta(1) = 0;
+J += lambda * theta' * theta / (2 * m);
 
-% grad = sum(sigmoid(X * theta) - y) .* X / m;
-
-
-selector = ones(size(theta), 1);
-selector(1) = 0;
-f = @(i) 1/m * sum((sigmoid(X * theta) - y) .* X(:, i)) + selector(i) * lambda / m * theta(i);
-
-yy = 1:size(theta);
-grad = arrayfun(f, yy);
-
+% First try: unvectorized
 %grad(1) = 1/m * sum((sigmoid(X * theta) - y) .* X(:, 1));
 
 %for i = 2:size(theta)
 %    grad(i) = 1/m * sum((sigmoid(X * theta) - y) .* X(:, i)) + lambda / m * theta(i);
 %end
 
+% Second try, with arrayfun
+% selector = ones(size(theta), 1);
+% selector(1) = 0;
+% f = @(i) 1/m * sum((sigmoid(X * theta) - y) .* X(:, i)) + selector(i) * lambda / m * theta(i);
+
+%yy = 1:size(theta);
+%grad = arrayfun(f, yy);
+
+% Vectorized, after reading this advice:
+% https://www.coursera.org/learn/machine-learning/discussions/GVdQ9vTdEeSUBCIAC9QURQ
+
+% Remember that theta(1) = 0;
+reg_grad = theta * lambda / m;
+
+grad = X' * (H - y) / m + reg_grad;
 
 
 % =============================================================
