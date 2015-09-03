@@ -43,9 +43,7 @@ J += lambda * theta' * theta / (2 * m);
 % https://www.coursera.org/learn/machine-learning/discussions/GVdQ9vTdEeSUBCIAC9QURQ
 
 % Remember that theta(1) = 0;
-reg_grad = theta * lambda / m;
-
-grad = X' * (H - y) / m + reg_grad;
+grad = X' * (H - y) / m + theta * lambda / m;
 
 
 % =============================================================
