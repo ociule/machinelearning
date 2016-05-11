@@ -63,24 +63,52 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+% See https://www.coursera.org/learn/machine-learning/week/5/discussions/QFnrpQckEeWv5yIAC00Eog
+
+
+eye_matrix = eye(num_labels);
+y_matrix = eye_matrix(y,:);
+m = size(X, 1);
 
 
 
+a1 = [ones(m, 1) X];
+z2 = a1 * Theta1';
+
+a2 = [ones(size(z2, 1), 1) sigmoid(z2)];
+a3 = sigmoid(a2 * Theta2');
+
+% This was copy-pasted from lrCostFunction.
+% y became y_matrix, H became a3
+% and another wrapping sum was added, to account for the summing of k=1:10
+J = sum(sum(-y_matrix .* log(a3) - (1 - y_matrix) .* log(1 - a3))) / m;
 
 
+% And the regularization
 
+J += lambda * sum(sum(Theta1(:,2:end) .^ 2)) / (2 * m);
+J += lambda * sum(sum(Theta2(:,2:end) .^ 2)) / (2 * m);
 
+% Gradients, see https://www.coursera.org/learn/machine-learning/discussions/a8Kce_WxEeS16yIACyoj1Q
 
+d3 = a3 - y_matrix;
+d2 = d3 * Theta2(:,2:end) .* sigmoidGradient(z2);
+D1 = d2' * a1;
+D2 = d3' * a2;
 
+Theta1_grad = D1 ./ m;
+Theta2_grad = D2 ./ m;
 
+% And the regularization of the gradient
 
+Theta1(:,1) = 0;
+Theta2(:,1) = 0;
 
+Theta1 *= lambda / m;
+Theta2 *= lambda / m;
 
-
-
-
-
-% -------------------------------------------------------------
+Theta1_grad += Theta1;
+Theta2_grad += Theta2;
 
 % =========================================================================
 
