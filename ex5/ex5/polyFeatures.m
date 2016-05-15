@@ -15,9 +15,9 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
-
-
-
+% See https://www.coursera.org/learn/machine-learning/discussions/A1WnlDJsEeWPACIACw4G5w
+X_poly = X * ones(1, p);
+X_poly .^= (1:p);
 
 
 % =========================================================================

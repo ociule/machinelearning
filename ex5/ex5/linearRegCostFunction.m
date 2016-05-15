@@ -20,7 +20,25 @@ grad = zeros(size(theta));
 %
 
 
+% Copied from ex1
 
+H = X * theta;
+J = sum((H - y) .^ 2) / (2 * m);
+
+% Copied from ex3
+% See https://www.coursera.org/learn/machine-learning/module/mgpv7/discussions/0DKoqvTgEeS16yIACyoj1Q
+tmp = theta;
+theta(1) = 0;
+J += lambda * theta' * theta / (2 * m);
+
+
+% Vectorized, after reading this advice:
+% https://www.coursera.org/learn/machine-learning/discussions/GVdQ9vTdEeSUBCIAC9QURQ
+
+% Remember that theta(1) = 0;
+grad = X' * (H - y) / m + theta * lambda / m;
+
+theta = tmp;
 
 
 
