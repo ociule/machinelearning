@@ -22,6 +22,7 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+% See https://www.coursera.org/learn/machine-learning/week/8/discussions/ncYc-ddQEeWaURKFEvfOjQ/
 dist = zeros(m, K);
 
 for i = 1:K
