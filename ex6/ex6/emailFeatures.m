@@ -48,12 +48,12 @@ x = zeros(n, 1);
 %
 %
 
+%for ix = 1:length(word_indices)
+%  ix_word = word_indices(ix);
+%  x(ix_word) = 1;
+%end
 
-
-
-
-
-
+x(word_indices) = 1;
 
 % =========================================================================
     
