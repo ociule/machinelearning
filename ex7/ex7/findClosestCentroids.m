@@ -26,11 +26,12 @@ idx = zeros(size(X,1), 1);
 dist = zeros(m, K);
 
 for i = 1:K
-    x = X(i,:)
+    c = centroids(i,:);
+    diffs = bsxfun(@minus, X, c);
+    dist(:, i) = sum((diffs) .^ 2, 2);
+end
 
-
-
-
+[dummy, idx] = min(dist, [], 2);
 
 % =============================================================
 
