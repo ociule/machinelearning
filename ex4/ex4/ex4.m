@@ -41,6 +41,18 @@ sel = sel(1:100);
 
 displayData(X(sel, :));
 
+ix = randperm(m);
+
+m_val = 500;
+ix_val = ix(1:m_val);
+ix_train = ix(m_val+1:m);
+
+X_val = X(ix_val, :);
+y_val = y(ix_val, :);
+
+X = X(ix_train, :);
+y = y(ix_train, :);
+
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
@@ -183,7 +195,7 @@ fprintf('\nTraining Neural Network... \n')
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-options = optimset('MaxIter', 50);
+options = optimset('MaxIter', 90);
 
 %  You should also try different values of lambda
 lambda = 1;
@@ -232,3 +244,7 @@ pred = predict(Theta1, Theta2, X);
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
 
 
+
+pred_val = predict(Theta1, Theta2, X_val);
+
+fprintf('\nValidation Set Accuracy: %f\n', mean(double(pred_val == y_val)) * 100);
