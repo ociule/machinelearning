@@ -3,3 +3,4 @@ token.mat
 .DS_Store
 octave-workspace
 .ipynb_checkpoints
+.pyc
