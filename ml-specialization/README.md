@@ -2,4 +2,4 @@
 
 ## Requirements
 
-Use requirements.txt, plus install graphlab via pip with the product key from (here)[https://turi.com/download/install-graphlab-create-command-line.html].
+Use requirements.txt, then install graphlab via pip with the product key from (here)[https://turi.com/download/install-graphlab-create-command-line.html].
