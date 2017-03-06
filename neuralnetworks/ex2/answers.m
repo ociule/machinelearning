@@ -1,0 +1,1 @@
+Q2: 2.537Q3: CE on training and validation fluctuate around a large value.Q4: 5.524Q5: best learning rate = 0.1Q6: after 10 epochs, sameQ8:Model D 100, 5, training 10 epochs 3.229Q9:training 5 epochsModel A: 200 50 momentum 0      3.996Model B: 200 50 momentum 0.5    3.344Model C: already trained. 200 50 momentum 0.9 (default) 2.715
